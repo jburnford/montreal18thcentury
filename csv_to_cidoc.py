@@ -3,7 +3,9 @@
 
 import csv
 import re
+import struct
 import unicodedata
+import zipfile
 from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
 
@@ -14,6 +16,7 @@ MTL = Namespace("http://montreal1725.lincsproject.ca/")
 CRM = Namespace("http://www.cidoc-crm.org/cidoc-crm/")
 
 INPUT_CSV = "leon/MTL1725_HISCO.csv"
+INPUT_SHP = "leon/MTL 1725_NAD83.zip"
 OUTPUT_TTL = "montreal1725.ttl"
 
 
@@ -89,6 +92,97 @@ def parse_date(cleaned):
 
     print(f"  WARNING: unparseable date '{cleaned}'")
     return None
+
+
+# ---------------------------------------------------------------------------
+# Shapefile reading
+# ---------------------------------------------------------------------------
+def load_geometries(shp_zip_path):
+    """Read shapefile from zip, return dict of numero_dt -> WKT POLYGON string."""
+    geometries = {}
+
+    with zipfile.ZipFile(shp_zip_path) as z:
+        shp_data = z.read("MTL 1725.shp")
+        dbf_data = z.read("MTL 1725.dbf")
+
+    # Parse DBF to get numero_dt for each record
+    num_records = struct.unpack_from("<I", dbf_data, 4)[0]
+    header_size = struct.unpack_from("<H", dbf_data, 8)[0]
+    record_size = struct.unpack_from("<H", dbf_data, 10)[0]
+
+    # Parse field descriptors to find numero_dt offset
+    fields = []
+    offset = 32
+    while dbf_data[offset] != 0x0D:
+        name = dbf_data[offset : offset + 11].replace(b"\x00", b"").decode()
+        ftype = chr(dbf_data[offset + 11])
+        flen = dbf_data[offset + 16]
+        fields.append((name, ftype, flen))
+        offset += 32
+
+    # Find numero_dt field position
+    field_offset = 1  # byte 0 is deletion flag
+    numero_dt_start = None
+    numero_dt_len = None
+    for name, ftype, flen in fields:
+        if name == "numero_dt":
+            numero_dt_start = field_offset
+            numero_dt_len = flen
+            break
+        field_offset += flen
+
+    # Read all numero_dt values
+    dbf_records = []
+    for i in range(num_records):
+        rec_offset = header_size + i * record_size
+        rec = dbf_data[rec_offset : rec_offset + record_size]
+        numero_dt = rec[numero_dt_start : numero_dt_start + numero_dt_len].decode("latin-1").strip()
+        dbf_records.append(numero_dt)
+
+    # Parse SHP file
+    shp_offset = 100  # skip header
+    for i in range(num_records):
+        rec_num = struct.unpack_from(">I", shp_data, shp_offset)[0]
+        content_len = struct.unpack_from(">I", shp_data, shp_offset + 4)[0] * 2
+        shape_type = struct.unpack_from("<I", shp_data, shp_offset + 8)[0]
+
+        if shape_type == 5:  # Polygon
+            num_parts = struct.unpack_from("<I", shp_data, shp_offset + 44)[0]
+            num_points = struct.unpack_from("<I", shp_data, shp_offset + 48)[0]
+
+            # Read part indices
+            parts_offset = shp_offset + 52
+            parts = []
+            for p in range(num_parts):
+                parts.append(struct.unpack_from("<I", shp_data, parts_offset + p * 4)[0])
+
+            # Read points
+            points_offset = parts_offset + num_parts * 4
+            points = []
+            for p in range(num_points):
+                x, y = struct.unpack_from("<2d", shp_data, points_offset + p * 16)
+                points.append((x, y))
+
+            # Build WKT
+            if num_parts == 1:
+                ring = ", ".join(f"{x} {y}" for x, y in points)
+                wkt = f"POLYGON(({ring}))"
+            else:
+                rings = []
+                for pi in range(num_parts):
+                    start = parts[pi]
+                    end = parts[pi + 1] if pi + 1 < num_parts else num_points
+                    ring = ", ".join(f"{x} {y}" for x, y in points[start:end])
+                    rings.append(f"({ring})")
+                wkt = f"POLYGON({', '.join(rings)})"
+
+            numero_dt = dbf_records[i]
+            if numero_dt:
+                geometries[numero_dt] = wkt
+
+        shp_offset += 8 + content_len
+
+    return geometries
 
 
 # ---------------------------------------------------------------------------
@@ -189,7 +283,7 @@ def get_or_create_person(g, row, seen_persons):
     return uri
 
 
-def get_or_create_lot(g, row, seen_lots):
+def get_or_create_lot(g, row, seen_lots, geometries=None):
     """Create or retrieve lot E18 + E93. Returns (e18_uri, e93_uri)."""
     numero_dt = row["numero_dt"].strip()
     if not numero_dt:
@@ -210,6 +304,10 @@ def get_or_create_lot(g, row, seen_lots):
     g.add((e93_uri, RDF.type, CRM.E93_Presence))
     g.add((e93_uri, RDFS.label, Literal(f"Lot {numero_dt} (1725)")))
     g.add((e93_uri, CRM.P195_was_a_presence_of, e18_uri))
+
+    # Geometry from shapefile
+    if geometries and numero_dt in geometries:
+        g.add((e93_uri, CRM["P169i_spacetime_volume_is_defined_by"], Literal(geometries[numero_dt])))
 
     seen_lots[numero_dt] = (e18_uri, e93_uri)
     return e18_uri, e93_uri
@@ -260,7 +358,7 @@ def build_timespan(g, row_id, suffix, cleaned_date):
     return ts_uri
 
 
-def build_acquisition_event(g, row, person_uri, e18_uri, e8_registry):
+def build_acquisition_event(g, row, person_uri, e18_uri):
     """Create the incoming E8 Acquisition event."""
     row_id = row["id"].strip()
     mode = row["mode_acqui"].strip()
@@ -279,10 +377,7 @@ def build_acquisition_event(g, row, person_uri, e18_uri, e8_registry):
     g.add((e8_uri, CRM.P22_transferred_title_to, person_uri))
 
     # Mode of transfer
-    if mode and mode not in ("", "n/a", "s/m"):
-        type_uri = MTL[f"type/transfer-mode/{slug(mode)}"]
-        g.add((e8_uri, CRM.P2_has_type, type_uri))
-    elif mode in ("s/m", "n/a"):
+    if mode:
         type_uri = MTL[f"type/transfer-mode/{slug(mode)}"]
         g.add((e8_uri, CRM.P2_has_type, type_uri))
 
@@ -291,36 +386,24 @@ def build_acquisition_event(g, row, person_uri, e18_uri, e8_registry):
     if ts_uri:
         g.add((e8_uri, CRM["P4_has_time-span"], ts_uri))
 
-    # Register for potential merging
-    if acq_date and numero_dt:
-        e8_registry[(numero_dt, acq_date)] = e8_uri
 
-
-def build_disposition_event(g, row, person_uri, e18_uri, e8_registry):
+def build_disposition_event(g, row, person_uri, e18_uri):
     """Create the outgoing E8 Acquisition (disposition) event."""
     row_id = row["id"].strip()
     mode = row["mode_dispo"].strip()
     disp_date = clean_date(row["dispositio"])
 
-    if not person_uri or not e18_uri:
+    if not e18_uri:
         return
 
     numero_dt = row["numero_dt"].strip()
     name = row["proprietai"].strip()
-
-    # Check if this disposition matches an existing acquisition (merge)
-    merge_key = (numero_dt, disp_date) if disp_date else None
-    if merge_key and merge_key in e8_registry:
-        e8_uri = e8_registry[merge_key]
-        g.add((e8_uri, CRM.P23_transferred_title_from, person_uri))
-        return
 
     e8_uri = MTL[f"acquisition/{row_id}-disp"]
 
     g.add((e8_uri, RDF.type, CRM.E8_Acquisition))
     g.add((e8_uri, RDFS.label, Literal(f"Disposition of lot {numero_dt} from {name}")))
     g.add((e8_uri, CRM.P24_transferred_title_of, e18_uri))
-    g.add((e8_uri, CRM.P23_transferred_title_from, person_uri))
 
     # Mode of transfer
     if mode and mode not in ("",):
@@ -384,6 +467,10 @@ def main():
     rows = load_csv(INPUT_CSV)
     print(f"  {len(rows)} rows after cleaning")
 
+    print("Loading shapefile geometries...")
+    geometries = load_geometries(INPUT_SHP)
+    print(f"  {len(geometries)} lot geometries loaded")
+
     g = Graph()
     bind_namespaces(g)
 
@@ -397,7 +484,6 @@ def main():
     seen_persons = {}
     seen_lots = {}
     seen_streets = {}
-    e8_registry = {}
 
     print("Processing rows...")
     for row in rows:
@@ -405,7 +491,7 @@ def main():
         person_uri = get_or_create_person(g, row, seen_persons)
 
         # Lot (E18 + E93)
-        e18_uri, e93_uri = get_or_create_lot(g, row, seen_lots)
+        e18_uri, e93_uri = get_or_create_lot(g, row, seen_lots, geometries)
 
         # Street (E93 + E53) and link lot to street
         street_uri = get_or_create_street(g, row, seen_streets)
@@ -413,10 +499,10 @@ def main():
             g.add((e93_uri, CRM.P10_falls_within, street_uri))
 
         # Acquisition event
-        build_acquisition_event(g, row, person_uri, e18_uri, e8_registry)
+        build_acquisition_event(g, row, person_uri, e18_uri)
 
         # Disposition event
-        build_disposition_event(g, row, person_uri, e18_uri, e8_registry)
+        build_disposition_event(g, row, person_uri, e18_uri)
 
     # Serialize
     print(f"Serializing {len(g)} triples...")
