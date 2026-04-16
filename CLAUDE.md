@@ -50,35 +50,50 @@ Always load the `cidoc-crm` skill before modeling work. Also consult `lincs-prof
 
 Use `http://montreal1725.lincsproject.ca/` as the project namespace (prefix: `mtl1725:`).
 
-### Spatial Model (from whiteboard — IMG_6399.jpg)
+### Spatial Model (from whiteboard + diagram)
 
 ```
-Lot (E93_Presence)
-  --P10_falls_within--> Historic Street (E93_Presence)
-    --P168_place_is_defined_by--> line geometry
-    --P161_has_spatial_projection--> Current Street (E53_Place)
-      --P89_falls_within--> Old Montreal (E53_Place)
-  --P167_was_within--> Old Montreal (E53_Place)  [possibly redundant/inferred]
+POINT/POLYGON geometry          LINE geometry
+        String                      String
+          ↑                           ↑
+    P169 defines                P169 defines
+    spacetime volume            spacetime volume
+          |                           |
+    Lot X (E93_Presence) --P10_falls_within--> Historic Street (E93_Presence)
+          |                                          |
+    P195_was_a_presence_of              P161_has_spatial_projection
+          ↓                                          ↓
+    Lot X (E18_Physical_Thing)               Current Street (E53_Place)
+          ↑                                          |
+    P24_transferred_title_of                P89_falls_within
+          |                                          ↓
+    Acquisition (E8)                         Old Montreal (E53_Place)
+       /        \                                    ↑
+P22_transferred  P23_transferred         P74_has_current_or_former_residence
+_title_to        _title_from                   (from Person)
+    ↓                ↓
+Person (E21)    Person (E21)
 ```
 
-- **Lots** and **historic streets** are E93_Presence (spacetime volumes — places at a specific time, 1725)
+- **Lots** are dual-modeled: E18_Physical_Thing (enduring) + E93_Presence (1725 snapshot with geometry)
+- **Historic streets** are E93_Presence (spacetime volumes — streets as they existed in 1725)
 - **Current streets** and **Old Montreal** are E53_Place (enduring spatial extents)
-- Historic-to-current street mapping uses P161_has_spatial_projection
+- Lot → Historic Street containment uses **P10_falls_within** (both are E93)
+- Historic → Current street mapping uses **P161_has_spatial_projection** (E93 → E53)
+- Geometry attaches via **P169_defines_spacetime_volume** (not P168, which is for E53)
 
-### Ownership Model (under discussion)
+### Ownership Model
 
 Each CSV row records an ownership period: person held title to a lot between two dates.
 
-**Current approach**: Two E8_Acquisition events per row:
+**Resolved approach**: Single E8_Acquisition per transfer event:
 
-1. **Incoming** (acquisition): P22_transferred_title_to the owner, P24_transferred_title_of the lot, typed by mode_acqui
-2. **Outgoing** (disposition): P23_transferred_title_from the owner, P24_transferred_title_of the lot, typed by mode_dispo
+- **P24_transferred_title_of** → the E18_Physical_Thing (enduring lot, not the E93 presence)
+- **P22_transferred_title_to** → the new owner (E21_Person)
+- **P23_transferred_title_from** → the previous owner (E21_Person), when known
+- **P2_has_type** → mode of transfer (achat, succession, vente, etc.) — E55_Type vocabulary to be specified
 
-**Open modeling questions** (not yet resolved):
-- Whether to explicitly model ownership as E30_Right with P104_is_subject_to
-- Whether P24 should point to the E53_Place (enduring lot) or E93_Presence (1725 lot)
-- Deduplication strategy for shared transfer events (one person's disposition = another's acquisition)
-- Vocabulary for modes of transfer: project SKOS vocab vs external authority (Wikidata/AAT)
+Each CSV row generates up to two E8 events (incoming acquisition + outgoing disposition). Where one person's disposition matches another's acquisition on the same lot and date, they merge into a single E8 node.
 
 ### Person Model
 
