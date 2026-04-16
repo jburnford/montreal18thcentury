@@ -1,0 +1,17 @@
+id: unique indentifier
+numero_dt: cadastral number according to the second “terrier” of the Sulpician Seminary
+proprietai: name of the owner
+acquisitio: start date of ownership
+mode_acqui: mode of acquisition
+dispositio : end date of ownership
+mode_dispo: mode of disposition
+origine : ethnic origin (F = French; C = Canadian)
+occupation: occupational category
+residence: place of residence (not always available)
+sexe: M or F
+type_propr: type of proprietor (individual, organization or estate of a deceased)
+HISCO: occupational classification according to the HISCO standard
+DBC: Dictionary of Canadian Biography link when applicable
+url-ind-id: url to unique id
+ind-id : individual id for people and organisations
+

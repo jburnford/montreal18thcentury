@@ -1,0 +1,15 @@
+# Windows Zone.Identifier files (WSL artifacts)
+*:Zone.Identifier
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
