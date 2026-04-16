@@ -283,34 +283,50 @@ def get_or_create_person(g, row, seen_persons):
     return uri
 
 
-def get_or_create_lot(g, row, seen_lots, geometries=None):
-    """Create or retrieve lot E18 + E93. Returns (e18_uri, e93_uri)."""
+def get_or_create_lot_e18(g, row, seen_lots):
+    """Create or retrieve the enduring lot E18. Returns e18_uri."""
     numero_dt = row["numero_dt"].strip()
     if not numero_dt:
-        return None, None
+        return None
 
     if numero_dt in seen_lots:
         return seen_lots[numero_dt]
 
     lot_id = safe_lot_id(numero_dt)
     e18_uri = MTL[f"lot/{lot_id}"]
-    e93_uri = MTL[f"lot-presence/{lot_id}"]
 
-    # E18 Physical Thing (enduring lot)
     g.add((e18_uri, RDF.type, CRM.E18_Physical_Thing))
     g.add((e18_uri, RDFS.label, Literal(f"Lot {numero_dt}")))
 
-    # E93 Presence (1725 snapshot)
+    seen_lots[numero_dt] = e18_uri
+    return e18_uri
+
+
+def build_lot_presence(g, row, e18_uri, geometries=None):
+    """Create an E93 Presence for this row's ownership period. Returns e93_uri."""
+    row_id = row["id"].strip()
+    numero_dt = row["numero_dt"].strip()
+    name = row["proprietai"].strip()
+
+    if not e18_uri:
+        return None
+
+    e93_uri = MTL[f"lot-presence/{row_id}"]
+
     g.add((e93_uri, RDF.type, CRM.E93_Presence))
-    g.add((e93_uri, RDFS.label, Literal(f"Lot {numero_dt} (1725)")))
+    g.add((e93_uri, RDFS.label, Literal(f"Lot {numero_dt} ({name})")))
     g.add((e93_uri, CRM.P195_was_a_presence_of, e18_uri))
 
-    # Geometry from shapefile
+    # Time-span: acquisitio to dispositio
+    ts_uri = build_presence_timespan(g, row_id, row["acquisitio"], row["dispositio"])
+    if ts_uri:
+        g.add((e93_uri, CRM["P4_has_time-span"], ts_uri))
+
+    # Geometry from shapefile (keyed by numero_dt)
     if geometries and numero_dt in geometries:
         g.add((e93_uri, CRM["P169i_spacetime_volume_is_defined_by"], Literal(geometries[numero_dt])))
 
-    seen_lots[numero_dt] = (e18_uri, e93_uri)
-    return e18_uri, e93_uri
+    return e93_uri
 
 
 def get_or_create_street(g, row, seen_streets):
@@ -340,14 +356,14 @@ def get_or_create_street(g, row, seen_streets):
     return e93_uri
 
 
-def build_timespan(g, row_id, suffix, cleaned_date):
-    """Create an E52 Time-Span for a specific event. Returns URI or None."""
+def build_timespan(g, uri_local, cleaned_date):
+    """Create an E52 Time-Span from a single date. Returns URI or None."""
     parsed = parse_date(cleaned_date)
     if not parsed:
         return None
 
     label, p82, p82a, p82b = parsed
-    ts_uri = MTL[f"timespan/{row_id}-{suffix}"]
+    ts_uri = MTL[f"timespan/{uri_local}"]
 
     g.add((ts_uri, RDF.type, CRM["E52_Time-Span"]))
     g.add((ts_uri, RDFS.label, Literal(label)))
@@ -358,8 +374,38 @@ def build_timespan(g, row_id, suffix, cleaned_date):
     return ts_uri
 
 
+def build_presence_timespan(g, row_id, acq_date_raw, disp_date_raw):
+    """Create an E52 Time-Span for the lot presence using acquisitio as begin and dispositio as end."""
+    acq_date = clean_date(acq_date_raw)
+    disp_date = clean_date(disp_date_raw)
+
+    acq_parsed = parse_date(acq_date) if acq_date else None
+    disp_parsed = parse_date(disp_date) if disp_date else None
+
+    if not acq_parsed and not disp_parsed:
+        return None
+
+    ts_uri = MTL[f"timespan/{row_id}-presence"]
+
+    # Build label from date range
+    acq_label = acq_parsed[0] if acq_parsed else "?"
+    disp_label = disp_parsed[0] if disp_parsed else "?"
+    label = f"{acq_label} to {disp_label}"
+
+    g.add((ts_uri, RDF.type, CRM["E52_Time-Span"]))
+    g.add((ts_uri, RDFS.label, Literal(label)))
+    g.add((ts_uri, CRM.P82_at_some_time_within, Literal(label)))
+
+    if acq_parsed:
+        g.add((ts_uri, CRM.P82a_begin_of_the_begin, acq_parsed[2]))  # p82a
+    if disp_parsed:
+        g.add((ts_uri, CRM.P82b_end_of_the_end, disp_parsed[3]))  # p82b
+
+    return ts_uri
+
+
 def build_acquisition_event(g, row, person_uri, e18_uri):
-    """Create the incoming E8 Acquisition event."""
+    """Create the E8 Acquisition event for this row."""
     row_id = row["id"].strip()
     mode = row["mode_acqui"].strip()
     acq_date = clean_date(row["acquisitio"])
@@ -367,7 +413,7 @@ def build_acquisition_event(g, row, person_uri, e18_uri):
     if not person_uri or not e18_uri:
         return
 
-    e8_uri = MTL[f"acquisition/{row_id}-acq"]
+    e8_uri = MTL[f"acquisition/{row_id}"]
     name = row["proprietai"].strip()
     numero_dt = row["numero_dt"].strip()
 
@@ -381,37 +427,8 @@ def build_acquisition_event(g, row, person_uri, e18_uri):
         type_uri = MTL[f"type/transfer-mode/{slug(mode)}"]
         g.add((e8_uri, CRM.P2_has_type, type_uri))
 
-    # Time-span
-    ts_uri = build_timespan(g, row_id, "acq", acq_date)
-    if ts_uri:
-        g.add((e8_uri, CRM["P4_has_time-span"], ts_uri))
-
-
-def build_disposition_event(g, row, person_uri, e18_uri):
-    """Create the outgoing E8 Acquisition (disposition) event."""
-    row_id = row["id"].strip()
-    mode = row["mode_dispo"].strip()
-    disp_date = clean_date(row["dispositio"])
-
-    if not e18_uri:
-        return
-
-    numero_dt = row["numero_dt"].strip()
-    name = row["proprietai"].strip()
-
-    e8_uri = MTL[f"acquisition/{row_id}-disp"]
-
-    g.add((e8_uri, RDF.type, CRM.E8_Acquisition))
-    g.add((e8_uri, RDFS.label, Literal(f"Disposition of lot {numero_dt} from {name}")))
-    g.add((e8_uri, CRM.P24_transferred_title_of, e18_uri))
-
-    # Mode of transfer
-    if mode and mode not in ("",):
-        type_uri = MTL[f"type/transfer-mode/{slug(mode)}"]
-        g.add((e8_uri, CRM.P2_has_type, type_uri))
-
-    # Time-span
-    ts_uri = build_timespan(g, row_id, "disp", disp_date)
+    # Time-span (acquisitio date only)
+    ts_uri = build_timespan(g, row_id, acq_date)
     if ts_uri:
         g.add((e8_uri, CRM["P4_has_time-span"], ts_uri))
 
@@ -490,19 +507,19 @@ def main():
         # Person or Group
         person_uri = get_or_create_person(g, row, seen_persons)
 
-        # Lot (E18 + E93)
-        e18_uri, e93_uri = get_or_create_lot(g, row, seen_lots, geometries)
+        # Lot E18 (enduring, deduplicated)
+        e18_uri = get_or_create_lot_e18(g, row, seen_lots)
 
-        # Street (E93 + E53) and link lot to street
+        # Lot E93 Presence (one per row, with ownership timespan)
+        e93_uri = build_lot_presence(g, row, e18_uri, geometries)
+
+        # Street (E93 + E53) and link lot presence to street
         street_uri = get_or_create_street(g, row, seen_streets)
         if street_uri and e93_uri:
             g.add((e93_uri, CRM.P10_falls_within, street_uri))
 
-        # Acquisition event
+        # Acquisition event (one per row)
         build_acquisition_event(g, row, person_uri, e18_uri)
-
-        # Disposition event
-        build_disposition_event(g, row, person_uri, e18_uri)
 
     # Serialize
     print(f"Serializing {len(g)} triples...")
