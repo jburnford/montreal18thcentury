@@ -2,10 +2,12 @@
 """Convert Montreal 1725 property-ownership CSV to CIDOC-CRM RDF/Turtle."""
 
 import csv
+import json
 import re
 import struct
 import unicodedata
 import zipfile
+from pyproj import Transformer
 from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
 
@@ -17,7 +19,47 @@ CRM = Namespace("http://www.cidoc-crm.org/cidoc-crm/")
 
 INPUT_CSV = "leon/MTL1725_HISCO.csv"
 INPUT_SHP = "leon/MTL 1725_NAD83.zip"
+INPUT_STREETS = "leon/Rues-Lignes.zip"
 OUTPUT_TTL = "montreal1725.ttl"
+
+TOPONYMIE_BASE = "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq="
+
+# Street grounding: 1725 name -> (no_seq, modern official name)
+STREET_GROUNDING = {
+    "rue Saint-Paul": (213063, "Rue Saint-Paul Ouest"),
+    "rue Saint-Paul (cul-de-sac)": (213063, "Rue Saint-Paul Ouest"),
+    "rue Notre-Dame": (213065, "Rue Notre-Dame Ouest"),
+    "rue Notre-Dame (prolongement)": (213082, "Rue Notre-Dame Est"),
+    "rue Saint-Jacques": (214783, "Rue Saint-Jacques"),
+    "rue Capitale": (213305, "Rue de la Capitale"),
+    "rue Saint-François-Xavier": (215010, "Rue Saint-François-Xavier"),
+    "rue Saint-Gabriel": (215011, "Rue Saint-Gabriel"),
+    "rue Saint-Joseph": (215048, "Rue Saint-Sulpice"),
+    "rue Saint-Pierre": (215041, "Rue Saint-Pierre"),
+    "rue de l'Hôpital": (213857, "Rue de l'Hôpital"),
+    "rue Saint-Vincent": (215055, "Rue Saint-Vincent"),
+    "rue Saint-Sacrement": (215045, "Rue du Saint-Sacrement"),
+    "Place du Marché": (214981, "Place Royale"),
+    "rue Saint-Jean-Baptiste": (215023, "Rue Saint-Jean-Baptiste"),
+    "rue Saint-Charles": (213896, "Place Jacques-Cartier"),
+    "rue Saint-Denis": (214994, "Rue Saint-Denis"),
+    "rue Saint-Eloi": (215003, "Rue Saint-Éloi"),
+    "rue Sainte-Thérèse": (215073, "Rue Sainte-Thérèse"),
+    "Place d'Armes": (208013, "Place d'Armes"),
+    "rue Bonsecours": (213229, "Rue de Bonsecours"),
+    "rue Saint-Alexis": (214966, "Rue Saint-Alexis"),
+    "chemin du bord du fleuve": (327282, "Rue de la Commune Est"),
+    "rue Augustine": (214341, "Rue McGill"),
+    "rue Saint-Guillaume": (213510, "Rue Dollard"),
+    "rue Saint-Jean": (215022, "Rue Saint-Jean"),
+    "rue Saint-François": (215010, "Rue Saint-François-Xavier"),
+    # Compound streets point to component streets
+    "Place du Marché et rue Capitale": (214981, "Place Royale"),
+    "rue Capitale et Place du Marché": (213305, "Rue de la Capitale"),
+    "rue Saint-François et place Bonsecours": (215010, "Rue Saint-François-Xavier"),
+    "place Bonsecours": (213229, "Rue de Bonsecours"),
+    # Not groundable: Fortifications, petite rue, passage entre rue Saint-Paul et rue Capitale
+}
 
 
 # ---------------------------------------------------------------------------
@@ -185,6 +227,65 @@ def load_geometries(shp_zip_path):
     return geometries
 
 
+# GeoJSON NomRue -> rue_devant mapping
+STREET_NAME_MAP = {
+    "Saint-Paul, rue": "rue Saint-Paul",
+    "Notre-Dame, rue": "rue Notre-Dame",
+    "Saint-Jacques, rue": "rue Saint-Jacques",
+    "Capitale, rue": "rue Capitale",
+    "Saint-François-Xavier": "rue Saint-François-Xavier",
+    "Saint-Gabriel, rue": "rue Saint-Gabriel",
+    "Saint-Joseph, rue": "rue Saint-Joseph",
+    "Saint-Pierre, rue": "rue Saint-Pierre",
+    "Hôpital, rue de l'": "rue de l'Hôpital",
+    "Saint-Vincent, rue": "rue Saint-Vincent",
+    "Saint-Sacrement, rue": "rue Saint-Sacrement",
+    "Augustine, rue": "rue Augustine",
+    "Marché, place du": "Place du Marché",
+    "Saint-Jean-Baptiste, rue": "rue Saint-Jean-Baptiste",
+    "Saint-François, rue": "rue Saint-François",
+    "Saint-Charles, rue": "rue Saint-Charles",
+    "Saint-Denis, rue": "rue Saint-Denis",
+    "Saint-Éloi, rue": "rue Saint-Eloi",
+    "Sainte-Thérèse": "rue Sainte-Thérèse",
+    "Armes, place d'": "Place d'Armes",
+    "Bonsecours, rue": "rue Bonsecours",
+    "Saint-Alexis, rue": "rue Saint-Alexis",
+    "Saint-Jean, rue": "rue Saint-Jean",
+    "Saint-Guillaume, rue": "rue Saint-Guillaume",
+}
+
+
+def load_street_geometries(geojson_zip_path):
+    """Read street GeoJSON from zip, reproject to WGS84, return dict of rue_devant -> WKT LINESTRING."""
+    transformer = Transformer.from_crs("EPSG:32188", "EPSG:4326", always_xy=True)
+    street_geoms = {}
+
+    with zipfile.ZipFile(geojson_zip_path) as z:
+        data = json.loads(z.read("Rues-Lignes.geojson"))
+
+    for feature in data["features"]:
+        nom_rue = feature["properties"]["NomRue"]
+        rue_devant = STREET_NAME_MAP.get(nom_rue)
+        if not rue_devant:
+            continue
+
+        geom = feature["geometry"]
+        # MultiLineString -> take first line
+        coords = geom["coordinates"][0]
+
+        # Reproject each coordinate from EPSG:32188 to WGS84
+        wgs84_coords = []
+        for x, y in coords:
+            lon, lat = transformer.transform(x, y)
+            wgs84_coords.append(f"{lon} {lat}")
+
+        wkt = f"LINESTRING({', '.join(wgs84_coords)})"
+        street_geoms[rue_devant] = wkt
+
+    return street_geoms
+
+
 # ---------------------------------------------------------------------------
 # Graph construction
 # ---------------------------------------------------------------------------
@@ -329,7 +430,7 @@ def build_lot_presence(g, row, e18_uri, geometries=None):
     return e93_uri
 
 
-def get_or_create_street(g, row, seen_streets):
+def get_or_create_street(g, row, seen_streets, street_geoms=None):
     """Create or retrieve street E93 + E53. Returns E93 URI or None."""
     rue = row["rue_devant"].strip()
     if not rue or rue == "n/a":
@@ -347,10 +448,24 @@ def get_or_create_street(g, row, seen_streets):
     g.add((e93_uri, RDFS.label, Literal(f"{rue} (1725)", lang="fr")))
     g.add((e93_uri, CRM.P161_has_spatial_projection, e53_uri))
 
+    # Street geometry
+    if street_geoms and rue in street_geoms:
+        g.add((e93_uri, CRM["P169i_spacetime_volume_is_defined_by"], Literal(street_geoms[rue])))
+
     # Current street (E53 Place)
     g.add((e53_uri, RDF.type, CRM.E53_Place))
     g.add((e53_uri, RDFS.label, Literal(rue, lang="fr")))
     g.add((e53_uri, CRM.P89_falls_within, MTL["place/old-montreal"]))
+
+    # Toponymie.gouv.qc.ca grounding
+    if rue in STREET_GROUNDING:
+        no_seq, modern_name = STREET_GROUNDING[rue]
+        topo_url = f"{TOPONYMIE_BASE}{no_seq}"
+        e73_uri = MTL[f"toponymie/{no_seq}"]
+        g.add((e73_uri, RDF.type, CRM.E73_Information_Object))
+        g.add((e73_uri, RDFS.label, Literal(f"Commission de toponymie: {modern_name}", lang="fr")))
+        g.add((e73_uri, CRM.P190_has_symbolic_content, Literal(topo_url)))
+        g.add((e73_uri, CRM.P129_is_about, e53_uri))
 
     seen_streets[rue] = e93_uri
     return e93_uri
@@ -488,6 +603,10 @@ def main():
     geometries = load_geometries(INPUT_SHP)
     print(f"  {len(geometries)} lot geometries loaded")
 
+    print("Loading street geometries...")
+    street_geoms = load_street_geometries(INPUT_STREETS)
+    print(f"  {len(street_geoms)} street geometries loaded")
+
     g = Graph()
     bind_namespaces(g)
 
@@ -514,7 +633,7 @@ def main():
         e93_uri = build_lot_presence(g, row, e18_uri, geometries)
 
         # Street (E93 + E53) and link lot presence to street
-        street_uri = get_or_create_street(g, row, seen_streets)
+        street_uri = get_or_create_street(g, row, seen_streets, street_geoms)
         if street_uri and e93_uri:
             g.add((e93_uri, CRM.P10_falls_within, street_uri))
 

@@ -6144,6 +6144,137 @@
     crm:P195_was_a_presence_of <http://montreal1725.lincsproject.ca/lot/329_1_> ;
     crm:P4_has_time-span <http://montreal1725.lincsproject.ca/timespan/99-presence> .
 
+<http://montreal1725.lincsproject.ca/toponymie/208013> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Place d'Armes"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/place-d-armes> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=208013" .
+
+<http://montreal1725.lincsproject.ca/toponymie/213063> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Paul Ouest"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-paul>,
+        <http://montreal1725.lincsproject.ca/current-street/rue-saint-paul-cul-de-sac> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=213063" .
+
+<http://montreal1725.lincsproject.ca/toponymie/213065> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Notre-Dame Ouest"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-notre-dame> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=213065" .
+
+<http://montreal1725.lincsproject.ca/toponymie/213082> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Notre-Dame Est"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-notre-dame-prolongement> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=213082" .
+
+<http://montreal1725.lincsproject.ca/toponymie/213229> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue de Bonsecours"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/place-bonsecours>,
+        <http://montreal1725.lincsproject.ca/current-street/rue-bonsecours> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=213229" .
+
+<http://montreal1725.lincsproject.ca/toponymie/213305> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue de la Capitale"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-capitale>,
+        <http://montreal1725.lincsproject.ca/current-street/rue-capitale-et-place-du-marche> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=213305" .
+
+<http://montreal1725.lincsproject.ca/toponymie/213510> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Dollard"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-guillaume> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=213510" .
+
+<http://montreal1725.lincsproject.ca/toponymie/213857> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue de l'Hôpital"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-de-l-hopital> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=213857" .
+
+<http://montreal1725.lincsproject.ca/toponymie/213896> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Place Jacques-Cartier"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-charles> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=213896" .
+
+<http://montreal1725.lincsproject.ca/toponymie/214341> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue McGill"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-augustine> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=214341" .
+
+<http://montreal1725.lincsproject.ca/toponymie/214783> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Jacques"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-jacques> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=214783" .
+
+<http://montreal1725.lincsproject.ca/toponymie/214966> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Alexis"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-alexis> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=214966" .
+
+<http://montreal1725.lincsproject.ca/toponymie/214981> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Place Royale"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/place-du-marche>,
+        <http://montreal1725.lincsproject.ca/current-street/place-du-marche-et-rue-capitale> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=214981" .
+
+<http://montreal1725.lincsproject.ca/toponymie/214994> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Denis"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-denis> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=214994" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215003> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Éloi"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-eloi> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215003" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215010> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-François-Xavier"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-francois>,
+        <http://montreal1725.lincsproject.ca/current-street/rue-saint-francois-et-place-bonsecours>,
+        <http://montreal1725.lincsproject.ca/current-street/rue-saint-francois-xavier> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215010" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215011> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Gabriel"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-gabriel> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215011" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215022> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Jean"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-jean> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215022" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215023> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Jean-Baptiste"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-jean-baptiste> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215023" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215041> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Pierre"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-pierre> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215041" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215045> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue du Saint-Sacrement"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-sacrement> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215045" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215048> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Sulpice"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-joseph> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215048" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215055> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Saint-Vincent"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-saint-vincent> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215055" .
+
+<http://montreal1725.lincsproject.ca/toponymie/215073> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue Sainte-Thérèse"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/rue-sainte-therese> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=215073" .
+
+<http://montreal1725.lincsproject.ca/toponymie/327282> a crm:E73_Information_Object ;
+    rdfs:label "Commission de toponymie: Rue de la Commune Est"@fr ;
+    crm:P129_is_about <http://montreal1725.lincsproject.ca/current-street/chemin-du-bord-du-fleuve> ;
+    crm:P190_has_symbolic_content "https://toponymie.gouv.qc.ca/ct/ToposWeb/Fiche.aspx?no_seq=327282" .
+
 <http://montreal1725.lincsproject.ca/type/transfer-mode/vente> a crm:E55_Type ;
     rdfs:label "vente"@fr .
 
@@ -7607,10 +7738,6 @@
     rdfs:label "Zacharie dit L'Agenois, Jean"@fr ;
     crm:P190_has_symbolic_content "Zacharie dit L'Agenois, Jean" .
 
-<http://montreal1725.lincsproject.ca/current-street/chemin-du-bord-du-fleuve> a crm:E53_Place ;
-    rdfs:label "chemin du bord du fleuve"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
 <http://montreal1725.lincsproject.ca/current-street/fortifications> a crm:E53_Place ;
     rdfs:label "Fortifications"@fr ;
     crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
@@ -7621,126 +7748,6 @@
 
 <http://montreal1725.lincsproject.ca/current-street/petite-rue> a crm:E53_Place ;
     rdfs:label "petite rue"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/place-bonsecours> a crm:E53_Place ;
-    rdfs:label "place Bonsecours"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/place-d-armes> a crm:E53_Place ;
-    rdfs:label "Place d'Armes"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/place-du-marche> a crm:E53_Place ;
-    rdfs:label "Place du Marché"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/place-du-marche-et-rue-capitale> a crm:E53_Place ;
-    rdfs:label "Place du Marché et rue Capitale"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-augustine> a crm:E53_Place ;
-    rdfs:label "rue Augustine"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-bonsecours> a crm:E53_Place ;
-    rdfs:label "rue Bonsecours"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-capitale> a crm:E53_Place ;
-    rdfs:label "rue Capitale"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-capitale-et-place-du-marche> a crm:E53_Place ;
-    rdfs:label "rue Capitale et Place du Marché"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-de-l-hopital> a crm:E53_Place ;
-    rdfs:label "rue de l'Hôpital"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-notre-dame> a crm:E53_Place ;
-    rdfs:label "rue Notre-Dame"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-notre-dame-prolongement> a crm:E53_Place ;
-    rdfs:label "rue Notre-Dame (prolongement)"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-alexis> a crm:E53_Place ;
-    rdfs:label "rue Saint-Alexis"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-charles> a crm:E53_Place ;
-    rdfs:label "rue Saint-Charles"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-denis> a crm:E53_Place ;
-    rdfs:label "rue Saint-Denis"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-eloi> a crm:E53_Place ;
-    rdfs:label "rue Saint-Eloi"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-francois> a crm:E53_Place ;
-    rdfs:label "rue Saint-François"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-francois-et-place-bonsecours> a crm:E53_Place ;
-    rdfs:label "rue Saint-François et place Bonsecours"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-francois-xavier> a crm:E53_Place ;
-    rdfs:label "rue Saint-François-Xavier"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-gabriel> a crm:E53_Place ;
-    rdfs:label "rue Saint-Gabriel"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-guillaume> a crm:E53_Place ;
-    rdfs:label "rue Saint-Guillaume"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-jacques> a crm:E53_Place ;
-    rdfs:label "rue Saint-Jacques"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-jean> a crm:E53_Place ;
-    rdfs:label "rue Saint-Jean"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-jean-baptiste> a crm:E53_Place ;
-    rdfs:label "rue Saint-Jean-Baptiste"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-joseph> a crm:E53_Place ;
-    rdfs:label "rue Saint-Joseph"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-paul> a crm:E53_Place ;
-    rdfs:label "rue Saint-Paul"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-paul-cul-de-sac> a crm:E53_Place ;
-    rdfs:label "rue Saint-Paul (cul-de-sac)"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-pierre> a crm:E53_Place ;
-    rdfs:label "rue Saint-Pierre"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-sacrement> a crm:E53_Place ;
-    rdfs:label "rue Saint-Sacrement"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-saint-vincent> a crm:E53_Place ;
-    rdfs:label "rue Saint-Vincent"@fr ;
-    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
-
-<http://montreal1725.lincsproject.ca/current-street/rue-sainte-therese> a crm:E53_Place ;
-    rdfs:label "rue Sainte-Thérèse"@fr ;
     crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
 
 <http://montreal1725.lincsproject.ca/group/BAS0002> a crm:E74_Group ;
@@ -15457,6 +15464,130 @@
 <http://montreal1725.lincsproject.ca/type/transfer-mode/n-a> a crm:E55_Type ;
     rdfs:label "n/a"@fr .
 
+<http://montreal1725.lincsproject.ca/current-street/chemin-du-bord-du-fleuve> a crm:E53_Place ;
+    rdfs:label "chemin du bord du fleuve"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/place-bonsecours> a crm:E53_Place ;
+    rdfs:label "place Bonsecours"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/place-d-armes> a crm:E53_Place ;
+    rdfs:label "Place d'Armes"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/place-du-marche> a crm:E53_Place ;
+    rdfs:label "Place du Marché"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/place-du-marche-et-rue-capitale> a crm:E53_Place ;
+    rdfs:label "Place du Marché et rue Capitale"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-augustine> a crm:E53_Place ;
+    rdfs:label "rue Augustine"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-bonsecours> a crm:E53_Place ;
+    rdfs:label "rue Bonsecours"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-capitale> a crm:E53_Place ;
+    rdfs:label "rue Capitale"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-capitale-et-place-du-marche> a crm:E53_Place ;
+    rdfs:label "rue Capitale et Place du Marché"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-de-l-hopital> a crm:E53_Place ;
+    rdfs:label "rue de l'Hôpital"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-notre-dame> a crm:E53_Place ;
+    rdfs:label "rue Notre-Dame"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-notre-dame-prolongement> a crm:E53_Place ;
+    rdfs:label "rue Notre-Dame (prolongement)"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-alexis> a crm:E53_Place ;
+    rdfs:label "rue Saint-Alexis"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-charles> a crm:E53_Place ;
+    rdfs:label "rue Saint-Charles"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-denis> a crm:E53_Place ;
+    rdfs:label "rue Saint-Denis"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-eloi> a crm:E53_Place ;
+    rdfs:label "rue Saint-Eloi"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-francois> a crm:E53_Place ;
+    rdfs:label "rue Saint-François"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-francois-et-place-bonsecours> a crm:E53_Place ;
+    rdfs:label "rue Saint-François et place Bonsecours"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-francois-xavier> a crm:E53_Place ;
+    rdfs:label "rue Saint-François-Xavier"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-gabriel> a crm:E53_Place ;
+    rdfs:label "rue Saint-Gabriel"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-guillaume> a crm:E53_Place ;
+    rdfs:label "rue Saint-Guillaume"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-jacques> a crm:E53_Place ;
+    rdfs:label "rue Saint-Jacques"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-jean> a crm:E53_Place ;
+    rdfs:label "rue Saint-Jean"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-jean-baptiste> a crm:E53_Place ;
+    rdfs:label "rue Saint-Jean-Baptiste"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-joseph> a crm:E53_Place ;
+    rdfs:label "rue Saint-Joseph"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-paul> a crm:E53_Place ;
+    rdfs:label "rue Saint-Paul"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-paul-cul-de-sac> a crm:E53_Place ;
+    rdfs:label "rue Saint-Paul (cul-de-sac)"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-pierre> a crm:E53_Place ;
+    rdfs:label "rue Saint-Pierre"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-sacrement> a crm:E53_Place ;
+    rdfs:label "rue Saint-Sacrement"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-saint-vincent> a crm:E53_Place ;
+    rdfs:label "rue Saint-Vincent"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
+<http://montreal1725.lincsproject.ca/current-street/rue-sainte-therese> a crm:E53_Place ;
+    rdfs:label "rue Sainte-Thérèse"@fr ;
+    crm:P89_falls_within <http://montreal1725.lincsproject.ca/place/old-montreal> .
+
 <http://montreal1725.lincsproject.ca/group/COM0001> a crm:E74_Group ;
     rdfs:label "Jésuites"@fr ;
     crm:P1_is_identified_by <http://montreal1725.lincsproject.ca/appellation/COM0001>,
@@ -16967,11 +17098,13 @@
 
 <http://montreal1725.lincsproject.ca/street/rue-bonsecours> a crm:E93_Presence ;
     rdfs:label "rue Bonsecours (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-bonsecours> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-bonsecours> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55134908192503 45.50984560441028, -73.55248214819524 45.51005314300523)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-guillaume> a crm:E93_Presence ;
     rdfs:label "rue Saint-Guillaume (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-guillaume> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-guillaume> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55888675712839 45.50187184112981, -73.55959916591375 45.502109430838004)" .
 
 <http://montreal1725.lincsproject.ca/person/BRO0012> a crm:E21_Person ;
     rdfs:label "Brossard, François"@fr ;
@@ -17010,7 +17143,8 @@
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-alexis> a crm:E93_Presence ;
     rdfs:label "rue Saint-Alexis (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-alexis> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-alexis> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55712794277038 45.50215482092825, -73.55794222037076 45.50254684949201, -73.5582490129609 45.50268963099868)" .
 
 <http://montreal1725.lincsproject.ca/person/payet-marguerite> a crm:E21_Person ;
     rdfs:label "Payet, Marguerite"@fr ;
@@ -17018,19 +17152,23 @@
 
 <http://montreal1725.lincsproject.ca/street/place-d-armes> a crm:E93_Presence ;
     rdfs:label "Place d'Armes (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/place-d-armes> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/place-d-armes> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55715678771058 45.504392152400214, -73.55755261485919 45.50455282859505, -73.55712638484933 45.50508228124449, -73.55666836916643 45.50493387333685)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-denis> a crm:E93_Presence ;
     rdfs:label "rue Saint-Denis (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-denis> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-denis> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55298410221894 45.5065628109112, -73.55368673649393 45.50686629515191)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-eloi> a crm:E93_Presence ;
     rdfs:label "rue Saint-Eloi (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-eloi> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-eloi> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55542894646493 45.502428895626245, -73.55639613781918 45.50278100385211)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-sainte-therese> a crm:E93_Presence ;
     rdfs:label "rue Sainte-Thérèse (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-sainte-therese> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-sainte-therese> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55393328609505 45.50647207064906, -73.55368673649393 45.50686629515191, -73.55348739453561 45.50717139548064)" .
 
 <http://montreal1725.lincsproject.ca/group/roi-de-france> a crm:E74_Group ;
     rdfs:label "Roi de France"@fr ;
@@ -17052,11 +17190,13 @@
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-charles> a crm:E93_Presence ;
     rdfs:label "rue Saint-Charles (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-charles> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-charles> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55214401606327 45.50765532382637, -73.55235138982383 45.5077263234142, -73.55385708148766 45.50830893650695)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-jean> a crm:E93_Presence ;
     rdfs:label "rue Saint-Jean (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-jean> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-jean> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55694094783631 45.50232151800297, -73.55764507313589 45.502726175095944, -73.55804425325275 45.502950923192884)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-notre-dame-prolongement> a crm:E93_Presence ;
     rdfs:label "rue Notre-Dame (prolongement) (1725)"@fr ;
@@ -17064,58 +17204,71 @@
 
 <http://montreal1725.lincsproject.ca/street/place-du-marche> a crm:E93_Presence ;
     rdfs:label "Place du Marché (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/place-du-marche> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/place-du-marche> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55461475141415 45.50316110352973, -73.55490149070869 45.503246691302806, -73.55477558696778 45.50348883784861, -73.5544243138129 45.50341890930356, -73.55460758113708 45.50316284348837)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-augustine> a crm:E93_Presence ;
     rdfs:label "rue Augustine (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-augustine> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-augustine> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55707159072894 45.50024155971881, -73.55952194453582 45.50104478908885, -73.56019027984608 45.50130294538057)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-jean-baptiste> a crm:E93_Presence ;
     rdfs:label "rue Saint-Jean-Baptiste (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-jean-baptiste> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-jean-baptiste> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55362494587993 45.50578382534286, -73.55533118059894 45.50646445528028)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-sacrement> a crm:E93_Presence ;
     rdfs:label "rue Saint-Sacrement (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-sacrement> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-sacrement> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55751132020602 45.50180786155251, -73.55712794277038 45.50215482092825, -73.55694094783631 45.50232151800297, -73.55680357226912 45.50243808524142, -73.55639613781918 45.50278100385211, -73.55602486616631 45.50313630346096)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-francois> a crm:E93_Presence ;
     rdfs:label "rue Saint-François (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-francois> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-francois> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55027980801843 45.5110190740762, -73.5507262549593 45.51030985482411, -73.5508489223747 45.510330878091786, -73.55126141215763 45.50983866110953, -73.55134908192503 45.50984560441028)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-de-l-hopital> a crm:E93_Presence ;
     rdfs:label "rue de l'Hôpital (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-de-l-hopital> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-de-l-hopital> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55814282371998 45.50240788174524, -73.55794222037076 45.50254684949201, -73.55764507313589 45.502726175095944, -73.55651344721825 45.503404249887126)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-vincent> a crm:E93_Presence ;
     rdfs:label "rue Saint-Vincent (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-vincent> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-vincent> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55278240932041 45.50687130100514, -73.55348739453561 45.50717139548064, -73.55444602097208 45.507587682304525)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-joseph> a crm:E93_Presence ;
     rdfs:label "rue Saint-Joseph (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-joseph> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-joseph> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55378281328936 45.50415151771526, -73.55450256251015 45.504318239056865, -73.55657667760975 45.504898288380424)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-pierre> a crm:E93_Presence ;
     rdfs:label "rue Saint-Pierre (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-pierre> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-pierre> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55587217525691 45.5010348354717, -73.55622730312507 45.50120256554842, -73.55751132020602 45.50180786155251, -73.55854533039664 45.502296085768315, -73.55914933617926 45.50258255953846)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-gabriel> a crm:E93_Presence ;
     rdfs:label "rue Saint-Gabriel (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-gabriel> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-gabriel> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.5533023674668 45.5061893591922, -73.5549688196604 45.50693607429644, -73.55563288758748 45.507226338225436, -73.55597840823569 45.507390766854215)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-capitale> a crm:E93_Presence ;
     rdfs:label "rue Capitale (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-capitale> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-capitale> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55498577902428 45.50258192550448, -73.55440011209868 45.503324627664135, -73.55391599235644 45.50418236747784)" .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-francois-xavier> a crm:E93_Presence ;
     rdfs:label "rue Saint-François-Xavier (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-francois-xavier> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-francois-xavier> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55480374995336 45.50248751089515, -73.55525583595261 45.5027219971729, -73.55602486616631 45.50313630346096, -73.55651344721825 45.503404249887126, -73.55738871701588 45.50386330139906, -73.55812992146507 45.50417996595012)" .
 
 <http://montreal1725.lincsproject.ca/type/transfer-mode/s-m> a crm:E55_Type ;
     rdfs:label "s/m"@fr .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-jacques> a crm:E93_Presence ;
     rdfs:label "rue Saint-Jacques (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-jacques> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-jacques> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.56019027984608 45.50130294538057, -73.55959916591375 45.502109430838004, -73.55914933617926 45.50258255953846, -73.55908354185566 45.50283269701125, -73.55812992146507 45.50417996595012, -73.55733845115019 45.50514648968443, -73.55629051817752 45.506448899805775, -73.55563288758748 45.507226338225436)" .
 
 <http://montreal1725.lincsproject.ca/place/old-montreal> a crm:E53_Place ;
     rdfs:label "Old Montreal"@en,
@@ -17123,14 +17276,16 @@
 
 <http://montreal1725.lincsproject.ca/street/rue-notre-dame> a crm:E93_Presence ;
     rdfs:label "rue Notre-Dame (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-notre-dame> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-notre-dame> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55948054420051 45.50108305090497, -73.55888675712839 45.50187184112981, -73.55854533039664 45.502296085768315, -73.5582490129609 45.50268963099868, -73.55804425325275 45.502950923192884, -73.55738871701588 45.50386330139906, -73.5570210274652 45.50437713710661, -73.55722890260004 45.50448186019226, -73.55698970717246 45.50476702164661, -73.55657667760975 45.504898288380424, -73.55560196320322 45.5061250853707, -73.55533118059894 45.50646445528028, -73.5549688196604 45.50693607429644, -73.55444602097208 45.507587682304525, -73.55385708148766 45.50830893650695, -73.5532674577988 45.50906561537877, -73.55248214819524 45.51005314300523)" .
 
 <http://montreal1725.lincsproject.ca/type/transfer-mode/succession> a crm:E55_Type ;
     rdfs:label "succession"@fr .
 
 <http://montreal1725.lincsproject.ca/street/rue-saint-paul> a crm:E93_Presence ;
     rdfs:label "rue Saint-Paul (1725)"@fr ;
-    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-paul> .
+    crm:P161_has_spatial_projection <http://montreal1725.lincsproject.ca/current-street/rue-saint-paul> ;
+    crm:P169i_spacetime_volume_is_defined_by "LINESTRING(-73.55707159072894 45.50024155971881, -73.55588027852876 45.50157455279718, -73.55564203183387 45.50208236275106, -73.55542894646493 45.502428895626245, -73.55525583595261 45.5027219971729, -73.55490443530071 45.50336305893253, -73.55450256251015 45.504318239056865, -73.55362494587993 45.50578382534286, -73.5533023674668 45.5061893591922, -73.55298410221894 45.5065628109112, -73.55278240932041 45.50687130100514, -73.55235138982383 45.5077263234142, -73.55191690843714 45.50861849415466, -73.55134908192503 45.50984560441028, -73.55105935420134 45.51116850846465, -73.55084482784359 45.512145905820105)" .
 
 <http://montreal1725.lincsproject.ca/type/transfer-mode/achat> a crm:E55_Type ;
     rdfs:label "achat"@fr .
