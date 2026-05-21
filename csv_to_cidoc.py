@@ -16,6 +16,56 @@ from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
 # ---------------------------------------------------------------------------
 MTL = Namespace("http://montreal1725.lincsproject.ca/")
 CRM = Namespace("http://www.cidoc-crm.org/cidoc-crm/")
+WD = Namespace("http://www.wikidata.org/entity/")
+TEMP_LINCS = Namespace("http://temp.lincsproject.ca/")
+EVENT = Namespace("http://id.lincsproject.ca/event/")
+
+# Wikidata grounding for street concepts
+WD_STREET = WD["Q79007"]  # street
+WD_HISTORIC_STREET = WD["Q40365391"]  # historic street
+
+# Type grounding for lot concepts
+WD_LAND_PARCEL = WD["Q683595"]  # land parcel
+TEMP_TERRIER = TEMP_LINCS["terrier"]  # parcel defined by the Sulpician land register
+TEMP_HISTORIC_LAND_PARCEL = TEMP_LINCS["historic_land_parcel"]  # historic land parcel
+
+# Occupation modeling
+OCCUPATION_EVENT = EVENT["OccupationEvent"]  # LINCS Occupation Event type
+
+# HISCO major-group digit -> labels as (language, label) pairs.
+# Only the digits that occur in the source data are listed. Most use the
+# standard HISCO / ISCO-68 major-group name; digit 9 is labelled with the
+# dataset's own term for this group (unskilled / journalier).
+HISCO_MAJOR_GROUPS = {
+    "1": [("en", "Professional, technical and related workers")],
+    "4": [("en", "Sales workers")],
+    "5": [("en", "Service workers")],
+    "6": [("en", "Agricultural, animal husbandry and forestry workers, fishermen and hunters")],
+    "7": [("en", "Production and related workers, transport equipment operators and labourers")],
+    "9": [("en", "unskilled"), ("fr", "journalier")],
+}
+
+# Exception actors: occupation grounded directly to a Wikidata concept,
+# keyed by the exact `proprietai` value.
+WD_KING_FR_NAVARRE = WD["Q3439798"]  # King of France and Navarre
+WD_SAINT_SULPICE = WD["Q522379"]     # Society of Saint-Sulpice
+ACTOR_OCCUPATION_OVERRIDE = {
+    "Roi de France": WD_KING_FR_NAVARRE,
+    "Séminaire de Saint-Sulpice de Paris": WD_SAINT_SULPICE,
+}
+
+# Manual corrections to the source CSV, keyed by row id -> {field: value}.
+# These resolve actors whose occupation was coded inconsistently across their
+# rows. The same corrections are already applied in leon/MTL1725_HISCO.csv;
+# they are kept here so the conversion stays correct if the source file is
+# ever re-supplied from the provider.
+ROW_CORRECTIONS = {
+    "373": {"occupation": "commerce", "HISCO": "4"},  # Dudevoir, Claude (DUD0001)
+    "219": {"occupation": "unknown"},                 # Payet, Marguerite
+    "222": {"occupation": "unknown"},                 # Payet, Marguerite
+    "408": {"occupation": "unknown", "HISCO": ""},    # Payet, Marguerite
+    "418": {"occupation": "unknown", "HISCO": ""},    # Payet, Marguerite
+}
 
 INPUT_CSV = "leon/MTL1725_HISCO.csv"
 INPUT_SHP = "leon/MTL 1725_NAD83.zip"
@@ -292,6 +342,9 @@ def load_street_geometries(geojson_zip_path):
 def bind_namespaces(g):
     g.bind("mtl1725", MTL)
     g.bind("crm", CRM)
+    g.bind("wd", WD)
+    g.bind("temp_lincs", TEMP_LINCS)
+    g.bind("event", EVENT)
     g.bind("rdf", RDF)
     g.bind("rdfs", RDFS)
     g.bind("owl", OWL)
@@ -300,15 +353,69 @@ def bind_namespaces(g):
 
 
 def build_type_vocabulary(g):
-    """Create all E55_Type instances."""
-    vocabs = {
-        "transfer-mode": ["achat", "succession", "vente", "s/m", "n/a"],
-    }
-    for category, values in vocabs.items():
-        for val in values:
-            uri = MTL[f"type/{category}/{slug(val)}"]
-            g.add((uri, RDF.type, CRM.E55_Type))
-            g.add((uri, RDFS.label, Literal(val, lang="fr")))
+    """Create all E55_Type instances for transfer modes.
+
+    Each entry: (CSV value used for the URI slug, label, label language).
+    """
+    transfer_modes = [
+        ("achat", "achat", "fr"),
+        ("succession", "succession", "fr"),
+        ("vente", "vente", "fr"),
+        ("s/m", "type of acquisition could not be determined", "en"),
+        ("n/a", "property that is outside of regular transaction", "en"),
+    ]
+    for value, label, lang in transfer_modes:
+        uri = MTL[f"type/transfer-mode/{slug(value)}"]
+        g.add((uri, RDF.type, CRM.E55_Type))
+        g.add((uri, RDFS.label, Literal(label, lang=lang)))
+
+
+def build_street_type(g):
+    """Create the E55_Type nodes for streets, grounded to Wikidata."""
+    g.add((WD_STREET, RDF.type, CRM.E55_Type))
+    g.add((WD_STREET, RDFS.label, Literal("street", lang="en")))
+    g.add((WD_STREET, RDFS.label, Literal("rue", lang="fr")))
+
+    g.add((WD_HISTORIC_STREET, RDF.type, CRM.E55_Type))
+    g.add((WD_HISTORIC_STREET, RDFS.label, Literal("historic street", lang="en")))
+    g.add((WD_HISTORIC_STREET, RDFS.label, Literal("ancienne rue", lang="fr")))
+
+
+def build_lot_types(g):
+    """Create the E55_Type nodes for lot concepts."""
+    g.add((WD_LAND_PARCEL, RDF.type, CRM.E55_Type))
+    g.add((WD_LAND_PARCEL, RDFS.label, Literal("land parcel", lang="en")))
+    g.add((WD_LAND_PARCEL, RDFS.label, Literal("parcelle", lang="fr")))
+
+    g.add((TEMP_TERRIER, RDF.type, CRM.E55_Type))
+    g.add((TEMP_TERRIER, RDFS.label, Literal(
+        "land parcel defined by land register maintained by Society of Saint-Sulpice",
+        lang="en")))
+
+    g.add((TEMP_HISTORIC_LAND_PARCEL, RDF.type, CRM.E55_Type))
+    g.add((TEMP_HISTORIC_LAND_PARCEL, RDFS.label, Literal("historic land parcel", lang="en")))
+
+
+def build_occupation_types(g):
+    """Create the E55_Type nodes used by occupation activities."""
+    # LINCS Occupation Event type
+    g.add((OCCUPATION_EVENT, RDF.type, CRM.E55_Type))
+    g.add((OCCUPATION_EVENT, RDFS.label, Literal("Occupation Event", lang="en")))
+
+    # HISCO major-group types (temp_lincs IDs, pending LINCS minting)
+    for digit, labels in HISCO_MAJOR_GROUPS.items():
+        uri = TEMP_LINCS[f"hisco_major_group_{digit}"]
+        g.add((uri, RDF.type, CRM.E55_Type))
+        for lang, label in labels:
+            g.add((uri, RDFS.label, Literal(label, lang=lang)))
+
+    # Exception-actor occupation types (Wikidata-grounded)
+    g.add((WD_KING_FR_NAVARRE, RDF.type, CRM.E55_Type))
+    g.add((WD_KING_FR_NAVARRE, RDFS.label, Literal("King of France and Navarre", lang="en")))
+    g.add((WD_KING_FR_NAVARRE, RDFS.label, Literal("roi de France et de Navarre", lang="fr")))
+    g.add((WD_SAINT_SULPICE, RDF.type, CRM.E55_Type))
+    g.add((WD_SAINT_SULPICE, RDFS.label, Literal("Society of Saint-Sulpice", lang="en")))
+    g.add((WD_SAINT_SULPICE, RDFS.label, Literal("Compagnie des prêtres de Saint-Sulpice", lang="fr")))
 
 
 def build_old_montreal(g):
@@ -320,28 +427,28 @@ def build_old_montreal(g):
     return uri
 
 
+def person_key(row):
+    """Stable dedup key for a person/group: ind-id, else slugified name."""
+    ind_id = row["ind-id"].strip()
+    name = row["proprietai"].strip()
+    if not name and not ind_id:
+        return None
+    return ind_id if ind_id else slug(name)
+
+
 def get_or_create_person(g, row, seen_persons):
     """Create or retrieve a person/group entity. Returns URI."""
     ind_id = row["ind-id"].strip()
     name = row["proprietai"].strip()
     type_propr = row["type_propr"].strip()
 
-    if not name and not ind_id:
+    key = person_key(row)
+    if key is None:
         return None
 
     # Determine URI
-    if ind_id:
-        key = ind_id
-        if type_propr == "individu":
-            uri = MTL[f"person/{ind_id}"]
-        else:
-            uri = MTL[f"group/{ind_id}"]
-    else:
-        key = slug(name)
-        if type_propr == "individu":
-            uri = MTL[f"person/{key}"]
-        else:
-            uri = MTL[f"group/{key}"]
+    folder = "person" if type_propr == "individu" else "group"
+    uri = MTL[f"{folder}/{key}"]
 
     if key in seen_persons:
         return seen_persons[key]
@@ -398,6 +505,8 @@ def get_or_create_lot_e18(g, row, seen_lots):
 
     g.add((e18_uri, RDF.type, CRM.E18_Physical_Thing))
     g.add((e18_uri, RDFS.label, Literal(f"Lot {numero_dt}")))
+    g.add((e18_uri, CRM.P2_has_type, WD_LAND_PARCEL))
+    g.add((e18_uri, CRM.P2_has_type, TEMP_TERRIER))
 
     seen_lots[numero_dt] = e18_uri
     return e18_uri
@@ -416,6 +525,7 @@ def build_lot_presence(g, row, e18_uri, geometries=None):
 
     g.add((e93_uri, RDF.type, CRM.E93_Presence))
     g.add((e93_uri, RDFS.label, Literal(f"Lot {numero_dt} ({name})")))
+    g.add((e93_uri, CRM.P2_has_type, TEMP_HISTORIC_LAND_PARCEL))
     g.add((e93_uri, CRM.P195_was_a_presence_of, e18_uri))
 
     # Time-span: acquisitio to dispositio
@@ -446,6 +556,7 @@ def get_or_create_street(g, row, seen_streets, street_geoms=None):
     # Historic street (E93 Presence)
     g.add((e93_uri, RDF.type, CRM.E93_Presence))
     g.add((e93_uri, RDFS.label, Literal(f"{rue} (1725)", lang="fr")))
+    g.add((e93_uri, CRM.P2_has_type, WD_HISTORIC_STREET))
     g.add((e93_uri, CRM.P161_has_spatial_projection, e53_uri))
 
     # Street geometry
@@ -455,6 +566,7 @@ def get_or_create_street(g, row, seen_streets, street_geoms=None):
     # Current street (E53 Place)
     g.add((e53_uri, RDF.type, CRM.E53_Place))
     g.add((e53_uri, RDFS.label, Literal(rue, lang="fr")))
+    g.add((e53_uri, CRM.P2_has_type, WD_STREET))
     g.add((e53_uri, CRM.P89_falls_within, MTL["place/old-montreal"]))
 
     # Toponymie.gouv.qc.ca grounding
@@ -548,6 +660,50 @@ def build_acquisition_event(g, row, person_uri, e18_uri):
         g.add((e8_uri, CRM["P4_has_time-span"], ts_uri))
 
 
+def collect_occupations(rows):
+    """Per-actor occupation info gathered across all rows.
+
+    Returns key -> {"name": ..., "hisco": ...}. The first non-empty HISCO
+    digit seen for an actor wins (a couple of actors carry inconsistent
+    codes across their rows).
+    """
+    info = {}
+    for row in rows:
+        key = person_key(row)
+        if key is None:
+            continue
+        if key not in info:
+            info[key] = {"name": row["proprietai"].strip(), "hisco": row["HISCO"].strip()}
+        elif not info[key]["hisco"] and row["HISCO"].strip():
+            info[key]["hisco"] = row["HISCO"].strip()
+    return info
+
+
+def build_occupation_activity(g, key, actor_uri, name, hisco):
+    """Create the E7_Activity occupation event for an actor, when warranted.
+
+    The activity carries P14_carried_out_by -> actor and two P2_has_type
+    values: the LINCS Occupation Event type and a specific-occupation type.
+    Actors with no HISCO code (and not an exception actor) are skipped.
+    Returns True if an activity was created.
+    """
+    override = ACTOR_OCCUPATION_OVERRIDE.get(name)
+    if override is not None:
+        occ_type = override
+    elif hisco in HISCO_MAJOR_GROUPS:
+        occ_type = TEMP_LINCS[f"hisco_major_group_{hisco}"]
+    else:
+        return False  # no occupation data -> skip
+
+    act_uri = MTL[f"occupation/{key}"]
+    g.add((act_uri, RDF.type, CRM.E7_Activity))
+    g.add((act_uri, RDFS.label, Literal(f"Occupation of {name}")))
+    g.add((act_uri, CRM.P14_carried_out_by, actor_uri))
+    g.add((act_uri, CRM.P2_has_type, OCCUPATION_EVENT))
+    g.add((act_uri, CRM.P2_has_type, occ_type))
+    return True
+
+
 # ---------------------------------------------------------------------------
 # CSV loading and cleaning
 # ---------------------------------------------------------------------------
@@ -564,6 +720,13 @@ def load_csv(path):
                     row[k] = row[k].strip()
                 else:
                     row[k] = ""
+
+            # Apply manual data corrections (see ROW_CORRECTIONS)
+            rid = row.get("id", "")
+            for field, value in ROW_CORRECTIONS.get(rid, {}).items():
+                if row.get(field, "") != value:
+                    print(f"  FIX: row {rid} {field}: {row.get(field, '')!r} -> {value!r}")
+                    row[field] = value
 
             # Fix date typos
             for field in ("acquisitio", "dispositio"):
@@ -612,6 +775,9 @@ def main():
 
     # Build type vocabulary
     build_type_vocabulary(g)
+    build_street_type(g)
+    build_lot_types(g)
+    build_occupation_types(g)
 
     # Build Old Montreal
     build_old_montreal(g)
@@ -639,6 +805,16 @@ def main():
 
         # Acquisition event (one per row)
         build_acquisition_event(g, row, person_uri, e18_uri)
+
+    # Occupation activities (one per actor, deduplicated across rows)
+    print("Building occupation activities...")
+    occ_info = collect_occupations(rows)
+    occ_count = 0
+    for key, actor_uri in seen_persons.items():
+        info = occ_info.get(key)
+        if info and build_occupation_activity(g, key, actor_uri, info["name"], info["hisco"]):
+            occ_count += 1
+    print(f"  {occ_count} occupation activities created")
 
     # Serialize
     print(f"Serializing {len(g)} triples...")

@@ -151,7 +151,7 @@ id,numero_dt,rue_devant,proprietai,acquisitio,mode_acqui,dispositio,mode_dispo,o
 141,289(3),rue Notre-Dame,"Dubois, Pierre",1718/09/27,achat,1740/01/16,succession,C,production,s/m,M,individu,7,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,DUB0007
 395,65(2),rue Saint-Pierre,"Dudevoir dit Lachine, Claude",1723/09/16,achat,1756/10/14,succession,C,production,Ville-Marie,M,individu,7,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,DUD0002
 358,41(2),n/a,"Dudevoir, Claude",1719/11/10,achat,1735/05/26,succession,FR,commerce,Ville-Marie,M,individu,4,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,DUD0001
-373,124,rue Saint-Paul,"Dudevoir, Claude",1707/12/16,achat,1726/09/15,achat,FR,admin/officers,Ville-Marie,M,individu,1,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,DUD0001
+373,124,rue Saint-Paul,"Dudevoir, Claude",1707/12/16,achat,1726/09/15,achat,FR,commerce,Ville-Marie,M,individu,4,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,DUD0001
 205,248a,rue Notre-Dame,"Dumouchel, Jeanne",1718/01/14,succession,1725/12/05,vente,C,other,Ville-Marie,F,individu,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,DUM0004
 217,152(3),Place d'Armes,Fabrique Notre-Dame-de-Montréal,1693/04/15,achat,1733/09/11,vente,n/a,religious institution,n/a,n/a,paroisse,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,FAB0001
 231,147,rue Saint-Jacques,"Ferron dit Sancerre, Jean (héritiers)",1724/02/04,succession,1734/10/15,s/m,n/a,other,n/a,M,succession,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,FER0004
@@ -319,10 +319,10 @@ id,numero_dt,rue_devant,proprietai,acquisitio,mode_acqui,dispositio,mode_dispo,o
 115,294(1)/294(3)/294(4)/300,rue Notre-Dame,"Parent, Mathurin",1695/07/20,achat,1729/10/31,vente,FR,agriculture,côteau Saint-Pierre,M,individu,6,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
 103,334,rue Saint-Vincent,"Payet dit Saint-Amour, Claude (succession)",1725/01/07,succession,1725/01/07,vente,n/a,other,n/a,n/a,succession,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
 98,306/307(4)/308(2),rue Saint-Jacques,"Payet dit Saint-Amour, Jean",1724/11/02,achat,1741/04/02,succession,C,production,Ville-Marie,M,individu,7,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
-219,217(1)/217(2),rue Saint-Jacques,"Payet, Marguerite",1719/08/19,succession,1725/12/01,succession,C,other,s/m,F,individu,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
-222,230u,rue Saint-Jacques,"Payet, Marguerite",1715/01/08,succession,1728/10/09,s/m,C,other,s/m,F,individu,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
-408,26(2ptie)/27(2ptie),rue Notre-Dame (prolongement),"Payet, Marguerite",1715/01/08,succession,1725/12/01,succession,C,production,n/a,F,individu,7,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
-418,26(1ptie)/27(1ptie),rue Notre-Dame,"Payet, Marguerite",1715/01/08,succession,1725/12/01,succession,C,production,n/a,F,individu,7,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
+219,217(1)/217(2),rue Saint-Jacques,"Payet, Marguerite",1719/08/19,succession,1725/12/01,succession,C,unknown,s/m,F,individu,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
+222,230u,rue Saint-Jacques,"Payet, Marguerite",1715/01/08,succession,1728/10/09,s/m,C,unknown,s/m,F,individu,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
+408,26(2ptie)/27(2ptie),rue Notre-Dame (prolongement),"Payet, Marguerite",1715/01/08,succession,1725/12/01,succession,C,unknown,n/a,F,individu,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
+418,26(1ptie)/27(1ptie),rue Notre-Dame,"Payet, Marguerite",1715/01/08,succession,1725/12/01,succession,C,unknown,n/a,F,individu,,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
 27,406a(5),rue Saint-Paul,"Pécaudy de Contrecoeur, François-Antoine",1723/07/16,succession,1743/07/01,succession,C,admin/officers,Montréal,M,individu,1,	https://www.biographi.ca/fr/bio/pecaudy_de_contrecoeur_francois_antoine_3F.html,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
 292,80a/81(1),rue Notre-Dame,"Périnault, Toussaint",1720/10/15,achat,1727/08/14,achat,C,production,Ville-Marie,M,individu,7,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
 227,154(1)/154(3)/155(1)/155(3)/156(1),rue Saint-Joseph,"Perras, Pierre",1723/11/02,achat,1725/08/13,vente,C,production,Ville-Marie,M,individu,7,,https://remparts.info/adhemar_php/bio18.php?I_NUMERO=,
